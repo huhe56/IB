@@ -64,10 +64,10 @@ def find_vertical_spread(underline_ticker, option_chain_data, days_to_expiry, is
     short_strike_option = find_vertical_spread_short_option(option_chain_data, is_put)
     if not short_strike_option: return None
     short_strike = short_strike_option['strike']
-    tag = 'PUT' if is_put else 'CALL'
+    tag = 'Put' if is_put else 'Call'
     print ''
     print ''
-    print '-'*45, 'Short', underline_ticker, tag, 'Vertical Spread: Underline Price:', str(int(underline_price*100)/100.0), '-'*45
+    print '-'*45, 'Short', underline_ticker, tag, 'Vertical Spread ; Underline Price:', str(int(underline_price*100)/100.0), '-'*45
     print ''
     option_chains = option_chain_data[::-1] if is_put else option_chain_data
     strike_len = len(option_chains)
@@ -230,7 +230,7 @@ def find_strangle(underline_ticker, underline_price, option_chain_data_all, days
         strategy = "Naked Call"
     print ''
     print ''
-    print '-'*50, strategy,': Underline:', underline_ticker,'; Price: ', str(underline_price), '-'*50
+    print '-'*50, 'Short', underline_ticker, strategy,'; Underline Price: ', str(underline_price), '-'*50
     print ''
     
     put_delta, put_strike, put_mid_price, put_buying_power = 0, 0, 0, 0
@@ -279,7 +279,7 @@ def find_iron_condor(underline_ticker, option_chain_data_all, days_to_expiry):
     strategy = 'Iron Condor'
     print ''
     print ''
-    print '-'*50, strategy,': Underline:', underline_ticker,'; Price: ', str(int(underline_price*100)/100.0), '-'*50
+    print '-'*50, 'Short', underline_ticker, strategy,'; Underline Price: ', str(int(underline_price*100)/100.0), '-'*50
     print ''
     find_iron_condor_spread(underline_ticker, option_chain_data_all['P'], days_to_expiry, True)
     find_iron_condor_spread(underline_ticker, option_chain_data_all['C'], days_to_expiry, False)
@@ -287,11 +287,11 @@ def find_iron_condor(underline_ticker, option_chain_data_all, days_to_expiry):
 
 def find_iron_condor_spread(underline_ticker, option_chain_data, days_to_expiry, is_put):
     found = False
-    underline_price = option_chain_data[0]['underline_price']
+    #underline_price = option_chain_data[0]['underline_price']
     tag = 'PUT' if is_put else 'CALL'
     print ''
     print ''
-    print '-'*45, 'Short Iron Condor: Underline:',underline_ticker,';', tag, 'Price:', str(int(underline_price*100)/100.0), '-'*45
+    print '-'*60, tag, '-'*60
     print ''
     option_chain_1sd = find_1sd_option(option_chain_data, is_put)
     if not option_chain_1sd: return
@@ -387,7 +387,7 @@ def find_straddle(underline_ticker, underline_price, option_chain_data_all, days
     strategy = 'Straddle'    
     print ''
     print ''
-    print '-'*50, strategy,': Underline:', underline_ticker,'; Price: ', str(underline_price), '-'*50
+    print '-'*50, 'Short', underline_ticker, strategy,'; Underline Price: ', str(underline_price), '-'*50
     print ''
     
     put_delta, put_strike, put_mid_price, put_buying_power = 0, 0, 0, 0
