@@ -5,6 +5,7 @@ Created on Jan 16, 2015
 '''
 
 from datetime import datetime
+import math
 
 DEBUG = False
 
@@ -441,3 +442,21 @@ def calculate_naked_option_buying_power(underline_price, strike_price, credit, i
     return bp
 
 
+# Black Sholes Function - start
+def CND(X):
+    (a1,a2,a3,a4,a5) = (0.31938153, -0.356563782, 1.781477937, -1.821255978, 1.330274429)
+    L = abs(X)
+    K = 1.0 / (1.0 + 0.2316419 * L)
+    w = 1.0 - 1.0 / math.sqrt(2*math.pi)*math.exp(-L*L/2.) * (a1*K + a2*K*K + a3*math.pow(K,3) + a4*math.pow(K,4) + a5*math.pow(K,5))
+    if X<0:
+        w = 1.0-w
+    return w
+
+def BlackSholes(CallPutFlag,S,X,T,r,v):
+    d1 = (math.log(S/X)+(r+v*v/2.)*T)/(v*math.sqrt(T))
+    d2 = d1-v*math.sqrt(T)
+    if CallPutFlag=='c':
+        return S*CND(d1)-X*math.exp(-r*T)*CND(d2)
+    else:
+        return X*math.exp(-r*T)*CND(-d2)-S*CND(-d1)
+# Black Sholes Function - end
